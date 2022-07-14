@@ -1,3 +1,5 @@
+/* Functions and variables */
+
 const buttons = document.querySelectorAll('.button');
 const display = document.querySelector('.calc-screen');
 const operators = document.querySelectorAll('.op');
@@ -13,13 +15,13 @@ let operator;
 function calculate(op) {
 
     switch(op) {
-        case 'add': return firstNumber + secondNumber;
+        case 'add': currentResult = firstNumber + secondNumber;
         break;
-        case 'substract' : return firstNumber - secondNumber;
+        case 'substract' : currentResult = firstNumber - secondNumber;
         break;
-        case 'multiply' : return firstNumber * secondNumber;
+        case 'multiply' : currentResult = firstNumber * secondNumber;
         break;
-        case 'divide' : return firstNumber / secondNumber;
+        case 'divide' : currentResult = firstNumber / secondNumber;
         break;
     }
 
@@ -34,10 +36,12 @@ buttons.forEach((c) => {
 
             display.textContent = n.target.textContent;
         
-        } else {
-            
-            display.textContent += n.target.textContent;
+        } else if (display.textContent[0] === '.') {
+
+            display.textContent.shift('0')
         
+        } else {
+            display.textContent += n.target.textContent;
         }
 
     });
@@ -50,46 +54,37 @@ operators.forEach((c) => {
             t.style.backgroundColor = 'rgb(228, 56, 13)';
         })
 
-        n.target.style.backgroundColor = 'grey';
+        n.target.style.backgroundColor = 'rgb(17, 211, 211)';
 
         operator = n.target.id;
 
         if (firstNumber === null) {
+
             if (display.textContent.includes('.')) {
 
                 firstNumber = parseFloat(display.textContent);
             
             } else {
-                
+
                 firstNumber = parseInt(display.textContent);
-            
+
             }
 
-            console.log(firstNumber)
-
-            display.textContent = '0';
-        
-        } else {
-            if (display.textContent.includes('.')) {
+        }  else if (firstNumber !== null && currentResult === null) {
+            
+             if (display.textContent.includes('.')) {
 
                 secondNumber = parseFloat(display.textContent);
             
             } else {
-                
+
                 secondNumber = parseInt(display.textContent);
-            
+
             }
 
-            console.log(secondNumber)
-            
-            console.log(operator);
+                calculate(n.target.id);
+                console.log(calculate(n.target.id))
 
-            currentResult = calculate(operator);
-
-            display.textContent = '0'
-
-            firstNumber = null;
-            secondNumber = null;
         }
     })  
 });
