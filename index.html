@@ -4,10 +4,10 @@
         <meta charset="utf-8">
         <link rel="stylesheet" href="styles.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <style href="calc.js" defer></style>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
+        <script src="calc.js" defer></script>
     </head>
     <body>
         <div class="calc-frame">
@@ -24,15 +24,15 @@
                     <div class="button">7</div>
                     <div class="button">8</div>
                     <div class="button">9</div>
-                    <div class="filler button equal">=</div>
-                    <div class="button zero">0</div>
-                    <div class="button filler floating-point">.</div>
+                    <div class="filler equal">=</div>
+                    <div class=" button zero">0</div>
+                    <div class="filler floating-point">.</div>
                 </div>
                 <div class="operators">
-                    <div class="add">+</div>
-                    <div class="substract">-</div>
-                    <div class="multiply">*</div>
-                    <div class="divide">/</div>
+                    <div class="op" id="add">+</div>
+                    <div class="op" id="substract">-</div>
+                    <div class="op" id="multiply">*</div>
+                    <div class="op" id="divide">/</div>
                 </div>
             </div>
         </div>

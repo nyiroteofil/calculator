@@ -22,6 +22,7 @@
     display: flex;
     justify-content: right;
     font-family: 'Russo one';
+    overflow: hidden;
 }
 
 .credit {
@@ -68,6 +69,9 @@
 .filler {
     height: 72px;
     border: solid 2px black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .operators {
@@ -76,7 +80,7 @@
     grid-template-rows: repeat(4, 1fr);
 }
 
-.add, .substract, .multiply, .divide {
+.op{
     border: 2px black solid;
     background-color: rgb(228, 56, 13);
     display: flex;
@@ -86,7 +90,7 @@
     font-family: 'Russo one';
 }
 
-.divide {
+#divide {
     height: 72px;
 }
 
@@ -107,7 +111,12 @@ a:hover {
     font-size: 55px;
 }
 
-.add:hover, .substract:hover, .multiply:hover, .divide:hover {
+.op:hover {
     background-color: rgb(255, 225, 52);
     font-size: 65px;
+}
+
+.filler:hover {
+    background-color: rgb(52, 219, 30);
+    font-size: 55px;
 }
