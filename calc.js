@@ -6,113 +6,144 @@ const operators = document.querySelectorAll('.op');
 const floatingPoint = document.querySelector('.floating-point');
 const equals = document.querySelector('.equal');
 
-let currentResult;
+let op;
 
-let firstNumber;
-let secondNumber;
-let operator;
+let prev;
+let nxt;
 
-function calculate(op) {
+let equalPressed = false;
+let operatorPressed = false;
+
+    function convert(n) {
+
+        if (n.includes('.')) {
+
+            return parseFloat(n);
+        
+        } else {
+        
+            return parseInt(n);
+        
+        }
+    
+    }
+
+    function calculate(op, first, second) {
 
     switch(op) {
-        case 'add': currentResult = firstNumber + secondNumber;
+        case 'add': return first + second;
         break;
-        case 'substract' : currentResult = firstNumber - secondNumber;
+        case 'substract' : return first - second;
         break;
-        case 'multiply' : currentResult = firstNumber * secondNumber;
+        case 'multiply' : return first * second;
         break;
-        case 'divide' : currentResult = firstNumber / secondNumber;
+        case 'divide' : return first / second;
+        break;
+        default : return op;
         break;
     }
-
 }
 
-/*Listeners for the buttons*/
+    /*Listeners for the buttons*/
 
-buttons.forEach((c) => {
-    c.addEventListener('click', (n) => {
+    buttons.forEach((c) => {
+        c.addEventListener('click', (n) => {
 
-        if (display.textContent === '0') {
+            if (display.textContent === '0') {
 
-            display.textContent = n.target.textContent;
-        
-        } else if (display.textContent[0] === '.') {
+                display.textContent = n.target.textContent;
+            
+            } else if (display.textContent[0] === '.') {
 
-            display.textContent.shift('0')
-        
-        } else {
-            display.textContent += n.target.textContent;
-        }
+                display.textContent.shift('0')
+            
+            } else if (equalPressed === true){
 
+                display.textContent = n.target.textContent;
+
+                
+                equalPressed = false;
+
+            } else if (operatorPressed === true) {
+
+                display.textContent = n.target.textContent;
+
+                operatorPressed = false;
+
+            } else {
+
+                display.textContent += n.target.textContent;
+
+            }
+
+        });
     });
-});
 
-operators.forEach((c) => {
-    c.addEventListener('click', (n) => {
-
-        operators.forEach((t) => {
-            t.style.backgroundColor = 'rgb(228, 56, 13)';
-        })
-
-        n.target.style.backgroundColor = 'rgb(17, 211, 211)';
-
-        operator = n.target.id;
-
-        if (firstNumber === null) {
-
-            if (display.textContent.includes('.')) {
-
-                firstNumber = parseFloat(display.textContent);
-            
-            } else {
-
-                firstNumber = parseInt(display.textContent);
-
-            }
-
-        }  else if (firstNumber !== null && currentResult === null) {
-            
-             if (display.textContent.includes('.')) {
-
-                secondNumber = parseFloat(display.textContent);
-            
-            } else {
-
-                secondNumber = parseInt(display.textContent);
-
-            }
-
-                calculate(n.target.id);
-                console.log(calculate(n.target.id))
-
-        }
-    })  
-});
-
-equals.addEventListener('click', () => {
-    
-
-    if (currentResult === null) {
-        if (display.textContent.includes('.')) {
-            secondNumber = parseFloat(display.textContent);
-        } else {
-            secondNumber = parseInt(display.textContent);
-        }
-
-        currentResult = calculate(operator)
-        console.log(calculate(operator))
-        console.log(currentResult);
-    }
-
-    display.textContent = currentResult
-
-    firstNumber = null;
-    secondNumber = null;
 
     operators.forEach((c) => {
-        c.style.backgroundColor = 'rgb(228, 56, 13)';
-    })
+        c.addEventListener('click', (n) => {
 
-    operator = null;
-})
+            operators.forEach((t) => {
+
+                t.style.backgroundColor = 'rgb(228, 56, 13)';
+            
+            });
+
+            n.target.style.backgroundColor = 'rgb(17, 211, 211)';
+
+            op = n.target.id;
+
+            if (typeof prev === 'undefined') {
+
+                prev = convert(display.textContent);
+            
+            } else if ( typeof prev !== 'null' && typeof nxt === 'undefined') {
+    
+                nxt = convert(display.textContent);
+
+                prev = calculate(op, prev, nxt);
+            
+            } else {
+
+                console.log(prev);
+
+                nxt = convert(display.textContent);
+
+                prev = calculate(op, prev, nxt);
+    
+            }
+
+            operatorPressed = true;
+            display.textContent = prev;
+        })  
+    });
+
+
+
+    equals.addEventListener('click', () => {
+        
+        if ( typeof prev === 'undefined') {
+            
+            display.textContent = '0';
+
+        } else {
+            
+            display.textContent = calculate(op, prev, convert(display.textContent));
+        
+        }
+
+        equalPressed = true;
+        operatorPressed = false;
+
+        prev = undefined;
+        nxt = undefined;
+        op = undefined
+        
+        operators.forEach((t) => {
+
+            t.style.backgroundColor = 'rgb(228, 56, 13)';
+        
+        }); 
+
+    });
 
