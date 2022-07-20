@@ -6,6 +6,7 @@ const operators = document.querySelectorAll('.op');
 const floatingPoint = document.querySelector('.floating-point');
 const equals = document.querySelector('.equal');
 
+let prevOP;
 let op;
 
 let prev;
@@ -13,6 +14,7 @@ let nxt;
 
 let equalPressed = false;
 let operatorPressed = false;
+let floatPressed = false;
 
     function convert(n) {
 
@@ -101,7 +103,9 @@ let operatorPressed = false;
     
                 nxt = convert(display.textContent);
 
-                prev = calculate(op, prev, nxt);
+                prev = calculate(prevOP, prev, nxt);
+
+                display.textContent = prev;
             
             } else {
 
@@ -109,12 +113,16 @@ let operatorPressed = false;
 
                 nxt = convert(display.textContent);
 
-                prev = calculate(op, prev, nxt);
+                prev = calculate(prevOP, prev, nxt);
+
+                display.textContent = prev;
     
             }
 
             operatorPressed = true;
-            display.textContent = prev;
+            floatPressed = false;
+
+            prevOP = op;
         })  
     });
 
@@ -134,6 +142,7 @@ let operatorPressed = false;
 
         equalPressed = true;
         operatorPressed = false;
+        floatPressed = false,
 
         prev = undefined;
         nxt = undefined;
@@ -147,3 +156,14 @@ let operatorPressed = false;
 
     });
 
+    floatingPoint.addEventListener('click', () => {
+
+        if (floatPressed === false) {
+
+            display.textContent += '.';
+        
+        }
+
+        floatPressed = true;
+
+    })
