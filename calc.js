@@ -5,6 +5,7 @@ const display = document.querySelector('.calc-screen');
 const operators = document.querySelectorAll('.op');
 const floatingPoint = document.querySelector('.floating-point');
 const equals = document.querySelector('.equal');
+const clear = document.querySelector('#clear');
 
 let prevOP;
 let op;
@@ -126,7 +127,21 @@ let floatPressed = false;
         })  
     });
 
+    clear.addEventListener('click', () => {
 
+        prevOP = undefined;
+        op = undefined;
+
+        prev = undefined;
+        nxt = undefined;
+
+        equalPressed = false;
+        operatorPressed = false;
+        floatPressed = false;
+
+        display.textContent = '0';
+        
+    });
 
     equals.addEventListener('click', () => {
         
